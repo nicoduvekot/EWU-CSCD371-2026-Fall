@@ -21,6 +21,13 @@ public class Program
         Console.WriteLine("You got " + GetPercentCorrect(numberCorrect, questions.Length) + " correct");
     }
 
+    /// <summary>
+    /// Prompts the user to Select quiz 1 or 2.
+    /// Continues prompting until valid input is received.
+    /// </summary>
+    /// <returns>
+    /// the int value representing the selected quiz.
+    /// </returns>
     public static int GetQuizInputFromUser()
     {
         while (true)
@@ -45,6 +52,19 @@ public class Program
         }
     }
     
+    /// <summary>
+    /// Returns the file path for the associated quiz.
+    /// Use <see cref="GetQuizInputFromUser"/> to obtain this int value. 
+    /// </summary>
+    /// <param name="choice">
+    /// The int value representing selected quiz.
+    /// </param>
+    /// <returns>
+    /// The file path for the selected quiz.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    /// Thrown when <paramref name="choice"/> does not match a valid quiz option.
+    /// </exception>
     public static string GetFilePathForChoice(int choice)
     {
         return choice switch
