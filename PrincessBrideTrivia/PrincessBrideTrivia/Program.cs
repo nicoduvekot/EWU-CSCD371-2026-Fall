@@ -4,7 +4,9 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        string filePath = GetFilePath();
+        int userChoice = GetQuizInputFromUser();
+        
+        string filePath = GetFilePathForChoice(userChoice);
         Question[] questions = LoadQuestions(filePath);
 
         int numberCorrect = 0;
@@ -17,6 +19,40 @@ public class Program
             }
         }
         Console.WriteLine("You got " + GetPercentCorrect(numberCorrect, questions.Length) + " correct");
+    }
+
+    public static int GetQuizInputFromUser()
+    {
+        while (true)
+        {
+            Console.WriteLine("Would you like to take quiz one, or quiz two?");
+            Console.Write("Enter 1 or 2: ");
+            
+            string input = Console.ReadLine();
+
+            switch (input)
+            {
+                case "1":
+                    return 1;
+                
+                case "2":
+                    return 2;
+                
+                default:
+                    Console.WriteLine("Invalid input. Please enter a 1 or a 2.");
+                    break;
+            }
+        }
+    }
+    
+    public static string GetFilePathForChoice(int choice)
+    {
+        return choice switch
+        {
+            1 => "Trivia.txt",
+            2 => "Trivia2.txt",
+            _ => throw new ArgumentException("Invalid choice.")
+        };
     }
 
     public static string GetPercentCorrect(int numberCorrectAnswers, int numberOfQuestions)
