@@ -69,6 +69,56 @@ public class ProgramTests
         Assert.AreEqual(expectedString, percentage);
     }
 
+    [ResourceLock(WellKnownResources.Console)] // MSTEST0074: on 'Console.SetIn'
+    [TestMethod]
+    public void GetQuizInputFromUser_Input_RejectsInvalidInputsUntilCorrect()
+    {
+        // Arrange (simulates wrong inputs until a correct one)
+        string simInput = "x\n3\n1\n";
+        Console.SetIn(new StringReader(simInput));
+        
+        // Act
+        int choice = Program.GetQuizInputFromUser();
+        
+        // assert
+        Assert.AreEqual(1, choice);
+    }
+
+    [ResourceLock(WellKnownResources.Console)] // MSTEST0074: on 'Console.SetIn'
+    [TestMethod]
+    [DataRow("1", 1)]
+    [DataRow("2", 2)]
+    public void GetQuizInputFromUser_ValidInput_ReturnsCorrectQuizInput(string input, int expected)
+    {
+        Console.SetIn(new StringReader(input + "\n"));
+        
+        int choice = Program.GetQuizInputFromUser();
+        
+        Assert.AreEqual(expected, choice);
+    }
+
+    [TestMethod]
+    [DataRow(1, "Trivia.txt")]
+    [DataRow(2, "Trivia2.txt")]
+    public void GetFilePathForChoice_ReturnsCorrectFilePath(int choice, string expectedPath)
+    {
+        string filePath = Program.GetFilePathForChoice(choice);
+        
+        Assert.AreEqual(expectedPath, filePath);
+    }
+
+    [TestMethod]
+    [DataRow(1)]
+    [DataRow(2)]
+    public void GetFilePathForChoice_ReturnsExistingFile(int choice)
+    {
+        string filePath = Program.GetFilePathForChoice(choice);
+        
+        Assert.IsTrue(File.Exists(filePath));
+    }
+
+
+    #region Testing Helpers
 
     private static void GenerateQuestionsFile(string filePath, int numberOfQuestions)
     {
@@ -85,4 +135,7 @@ public class ProgramTests
             File.AppendAllLines(filePath, lines);
         }
     }
+
+    #endregion
+    
 }
