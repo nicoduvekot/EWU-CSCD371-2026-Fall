@@ -2,6 +2,7 @@
 
 namespace CanHazFunny;
 
+// Core 2: the JokeService will need to have the interface applied to it
 public class JokeService : IJokeService
 {
     private HttpClient HttpClient { get; } = new();
