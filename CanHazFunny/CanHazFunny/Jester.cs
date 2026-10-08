@@ -10,7 +10,7 @@ public class Jester(IJokeService jokeService, IOutputService outputService)
 
     // Core 5: the jester calss TellJoke() should:
     // retrieve a joke from the jokeService
-    // TODO : if the joke contains - ChuckNorris, skip it and get another
+    // SeeJokeService : if the joke contains - ChuckNorris, skip it and get another
     // this joke should be written to the output dependency
     public void TellJoke()
     {
