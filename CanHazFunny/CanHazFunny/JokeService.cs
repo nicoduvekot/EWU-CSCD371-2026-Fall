@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 
 namespace CanHazFunny;
 
@@ -9,7 +10,19 @@ public class JokeService : IJokeService
 
     public string GetJoke()
     {
-        string joke = HttpClient.GetStringAsync("https://geek-jokes.sameerkumar.website/api").Result;
+        string joke;
+
+        do
+        {
+            joke = HttpClient.GetStringAsync("https://geek-jokes.sameerkumar.website/api").Result;
+        } 
+        while (ContainsChuckNorris(joke));
+        
         return joke;
+    }
+
+    public bool ContainsChuckNorris(string joke)
+    {
+        return joke.Contains("Chuck Norris", StringComparison.OrdinalIgnoreCase);
     }
 }
