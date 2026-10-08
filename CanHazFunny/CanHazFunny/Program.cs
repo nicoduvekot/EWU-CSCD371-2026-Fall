@@ -1,4 +1,6 @@
-﻿namespace CanHazFunny;
+﻿using System;
+
+namespace CanHazFunny;
 
 class Program
 {
@@ -8,11 +10,16 @@ class Program
     /// <param name="args"></param>
     static void Main(string[] args)
     {
-        //contact joke api and get joke
-        IJokeService jokeService = new JokeService();
-        IOutputService outputService = new ConsoleOutputService();
-        
-        //Create a Jester instance and tell a joke
+        Run(() => new JokeService(), () => new ConsoleOutputService());
+    }
+
+    internal static void Run(Func<IJokeService> jokeServiceFactory, Func<IOutputService> outputServiceFactory)
+    {
+        Run(jokeServiceFactory(), outputServiceFactory());
+    }
+
+    internal static void Run(IJokeService jokeService, IOutputService outputService)
+    {
         Jester jester = new(jokeService, outputService);
         jester.TellJoke();
     }

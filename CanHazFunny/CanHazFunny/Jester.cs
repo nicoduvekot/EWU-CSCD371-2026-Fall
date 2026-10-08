@@ -14,7 +14,13 @@ public class Jester(IJokeService jokeService, IOutputService outputService)
     // this joke should be written to the output dependency
     public void TellJoke()
     {
-        string joke = _jokeService.GetJoke();
+        string joke;
+        do
+        {
+            joke = _jokeService.GetJoke();
+        }
+        while (joke.Contains("Chuck Norris", StringComparison.OrdinalIgnoreCase));
+
         _outputService.Output(joke);
     }
 }
